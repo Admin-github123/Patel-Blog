@@ -14,15 +14,24 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
-@PostMapping
+
+    @PostMapping
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
         PostDto dto = postService.createPost(postDto);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
+
     //http://localhost:8080/api/posts?id=1
     @GetMapping
-    public ResponseEntity<PostDto>getPostById(@RequestParam long id){
-        PostDto dto=postService.getPostById(id);
-        return new ResponseEntity<>(dto,HttpStatus.OK);
+    public ResponseEntity<PostDto> getPostById(@RequestParam long id) {
+        PostDto dto = postService.getPostById(id);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteById(@RequestParam long id) {
+        String message = postService.deletePostById(id);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
 }
