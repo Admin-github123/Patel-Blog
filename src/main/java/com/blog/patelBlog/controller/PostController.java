@@ -33,5 +33,10 @@ public class PostController {
         String message = postService.deletePostById(id);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+    @PutMapping
+    public ResponseEntity<PostDto>updatePost(@RequestBody PostDto postDto,@RequestParam long id){
+        PostDto postDto1 = postService.updatePost(postDto, id);
+        return new ResponseEntity<>(postDto1,HttpStatus.OK);
+    }
 
 }

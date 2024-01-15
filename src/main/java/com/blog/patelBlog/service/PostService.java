@@ -8,4 +8,6 @@ public interface PostService {
     PostDto getPostById(long id);
 
     String deletePostById(long id);
+
+    PostDto updatePost(PostDto postDto, Long id);
 }

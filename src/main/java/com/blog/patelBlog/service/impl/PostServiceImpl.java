@@ -7,6 +7,8 @@ import com.blog.patelBlog.repository.PostRepository;
 import com.blog.patelBlog.service.PostService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
@@ -51,5 +53,26 @@ public class PostServiceImpl implements PostService {
         );
         postRepository.deleteById(id);
         return "record is deleted!!";
+    }
+
+    @Override
+    public PostDto updatePost(PostDto postDto ,Long id) {
+        Optional<Post> optionalPost = postRepository.findById(id);
+        if(optionalPost.isPresent()){
+            Post post = optionalPost.get();
+            post.setTitle(postDto.getTitle());
+            post.setDescription(postDto.getDescription());
+            post.setContent(postDto.getContent());
+
+            Post updatePost = postRepository.save(post);
+            PostDto dto=new PostDto();
+            dto.setId(updatePost.getId());
+            dto.setTitle(updatePost.getTitle());
+            dto.setDescription(updatePost.getDescription());
+            dto.setContent(updatePost.getContent());
+            return dto;
+        }
+
+        return null;
     }
 }
